@@ -1,0 +1,4 @@
+name: Tetris
+version: '${project.version}'
+main: com.azuyamat.tetris.Tetris
+api-version: 1.19

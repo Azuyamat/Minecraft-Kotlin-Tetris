@@ -8,25 +8,28 @@
 
 package com.azuyamat.tetris.commands
 
-import com.azuyamat.tetris.utils.TextUtils
+import com.azuyamat.tetris.utils.format
 import me.honkling.commando.lib.Command
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 
-class GameModeC {
+object GameModeC {
+    private val mappedGamemode = mapOf(
+        setOf("creative", "c", "1") to GameMode.CREATIVE,
+        setOf("survival", "s", "0") to GameMode.SURVIVAL,
+        setOf("adventure", "a", "2") to GameMode.ADVENTURE,
+        setOf("spectator", "sp", "3") to GameMode.SPECTATOR
+    )
 
-    fun gamemode(executor: Player, mode: String, target: Player?){
-        val player : Player = target ?: executor
-        var modeM : GameMode? = null
-        when (mode.lowercase()) {
-            "creative" -> modeM = GameMode.CREATIVE
-            "survival" -> modeM = GameMode.SURVIVAL
-            "spectator" -> modeM = GameMode.SPECTATOR
-            "adventure" -> modeM = GameMode.ADVENTURE
-        }
-        if (modeM == null) {
-            executor.sendMessage(TextUtils.format("&3Game Mode &b"))
-        }
+    fun gamemode(executor: Player, mode: String, target: Player?) {
+        val target = target ?: executor
 
+        val gameMode = mappedGamemode.entries
+            .firstOrNull { it.key.contains(mode.lowercase()) }
+            ?.value
+
+        if(gameMode == null) {
+            executor.sendMessage("&3Game Mode &b".format())
+        }
     }
 }

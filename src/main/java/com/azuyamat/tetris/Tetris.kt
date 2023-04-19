@@ -8,6 +8,7 @@ class Tetris : JavaPlugin() {
         // Plugin startup logic
         val commandManager = CommandManager(this)
         commandManager.registerCommands("com.azuyamat.tetris.commands")
+        println("3")
     }
 
     override fun onDisable() {

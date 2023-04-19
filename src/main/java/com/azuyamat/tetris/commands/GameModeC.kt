@@ -13,17 +13,10 @@ import me.honkling.commando.lib.Command
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 
-object GameModeC {
-    private val mappedGamemode = mapOf(
-        setOf("creative", "c", "1") to GameMode.CREATIVE,
-        setOf("survival", "s", "0") to GameMode.SURVIVAL,
-        setOf("adventure", "a", "2") to GameMode.ADVENTURE,
-        setOf("spectator", "sp", "3") to GameMode.SPECTATOR
-    )
+class  GameModeC {
 
     fun gamemode(executor: Player, mode: String, target: Player?) {
         val target = target ?: executor
-
         val gameMode = mappedGamemode.entries
             .firstOrNull { it.key.contains(mode.lowercase()) }
             ?.value
@@ -32,4 +25,11 @@ object GameModeC {
             executor.sendMessage("&3Game Mode &b".format())
         }
     }
+
+    private val mappedGamemode = mapOf(
+        setOf("creative", "c", "1") to GameMode.CREATIVE,
+        setOf("survival", "s", "0") to GameMode.SURVIVAL,
+        setOf("adventure", "a", "2") to GameMode.ADVENTURE,
+        setOf("spectator", "sp", "3") to GameMode.SPECTATOR
+    )
 }

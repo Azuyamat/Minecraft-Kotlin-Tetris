@@ -13,23 +13,22 @@ import me.honkling.commando.lib.Command
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 
-class  GameModeC {
+fun gamemode(executor: Player, mode: String, target: Player?) {
+    val target = target ?: executor
+    val gameMode = mappedGamemode.entries
+        .firstOrNull { it.key.contains(mode.lowercase()) }
+        ?.value
 
-    fun gamemode(executor: Player, mode: String, target: Player?) {
-        val target = target ?: executor
-        val gameMode = mappedGamemode.entries
-            .firstOrNull { it.key.contains(mode.lowercase()) }
-            ?.value
-
-        if(gameMode == null) {
-            executor.sendMessage("&3Game Mode &b".format())
-        }
+    if(gameMode == null) executor.sendMessage("&cGame mode can't be found &4$mode".format())
+    else {
+        executor.sendMessage("&bGame mode set to &3${gameMode.name} &bfor &3${target.name}".format())
+        target.gameMode = gameMode
     }
-
-    private val mappedGamemode = mapOf(
-        setOf("creative", "c", "1") to GameMode.CREATIVE,
-        setOf("survival", "s", "0") to GameMode.SURVIVAL,
-        setOf("adventure", "a", "2") to GameMode.ADVENTURE,
-        setOf("spectator", "sp", "3") to GameMode.SPECTATOR
-    )
 }
+
+private val mappedGamemode = mapOf(
+    setOf("creative", "c", "1") to GameMode.CREATIVE,
+    setOf("survival", "s", "0") to GameMode.SURVIVAL,
+    setOf("adventure", "a", "2") to GameMode.ADVENTURE,
+    setOf("spectator", "sp", "3") to GameMode.SPECTATOR
+)
